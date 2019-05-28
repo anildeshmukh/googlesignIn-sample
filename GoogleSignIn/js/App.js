@@ -8,12 +8,18 @@
 
 import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View} from 'react-native';
+import { connect } from 'react-redux';
 import { GoogleSignin, GoogleSigninButton, statusCodes } from 'react-native-google-signin';
 import config from './config'
 
 type Props = {};
-export default class App extends Component<Props> {
+class App extends Component<Props> {
+  static navigationOptions = {
+        title: 'Login',
+  };
+
   async componentDidMount() {
+    console.log('REDUCER', this.props);
     this._configureGoogleSignIn();
     // await this._getCurrentUser();
   }
@@ -32,6 +38,8 @@ export default class App extends Component<Props> {
       const userInfo = await GoogleSignin.signIn();
       console.log('GOOGLE_', JSON.stringify(userInfo))
       this.setState({ userInfo });
+      this.props.dispatch({type:'SET_USER_NAME',payload:userInfo.user.givenName})
+      this.props.navigation.navigate('WelcomeScreen')
     } catch (error) {
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {
         console.log('GOOGLE_','SIGN_IN_CANCELLED');
@@ -80,3 +88,9 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
 });
+
+const mapStateToProps = ()=>{
+  return {greetings:'Good Morning!'}
+}
+
+export default connect(null)(App);
