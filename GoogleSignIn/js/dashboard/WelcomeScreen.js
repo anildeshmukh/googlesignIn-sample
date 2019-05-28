@@ -10,7 +10,6 @@ import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View} from 'react-native';
 import { connect } from 'react-redux';
 
-type Props = {};
 class App extends Component<Props> {
   static navigationOptions = {
         title: 'Dashbord',

@@ -7,12 +7,11 @@
  */
 
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View} from 'react-native';
+import {Platform, StyleSheet, Text, View, Button} from 'react-native';
 import { connect } from 'react-redux';
 import { GoogleSignin, GoogleSigninButton, statusCodes } from 'react-native-google-signin';
 import config from './config'
 
-type Props = {};
 class App extends Component<Props> {
 
   async componentDidMount() {
@@ -51,15 +50,20 @@ class App extends Component<Props> {
     }
   };
   render() {
+    console.log('GOOGLE_',this.props.userName)
+    let message = this.props.userName?'Please Logout':'Please Signin'
     return (
       <View style={styles.container}>
-        <Text style={styles.welcome}>Welcome to Google SignIn!</Text>
-        <GoogleSigninButton
-          style={{ width: 192, height: 48 }}
-          size={GoogleSigninButton.Size.Wide}
-          color={GoogleSigninButton.Color.Dark}
-          onPress={this._signIn}
-          disabled={false} />
+        <Text style={styles.welcome}>{message}</Text>
+        { this.props.userName
+            ?<Button title='Logout' onPress={()=>{//todo please implement logout}} />
+            :<GoogleSigninButton
+              style={{ width: 192, height: 48 }}
+              size={GoogleSigninButton.Size.Wide}
+              color={GoogleSigninButton.Color.Dark}
+              onPress={this._signIn}
+              disabled={false} />
+          }
       </View>
     );
   }
@@ -84,4 +88,8 @@ const styles = StyleSheet.create({
   },
 });
 
-export default connect(null)(App);
+const mapStateToProps = (state)=>{
+  return {userName:state.user.username}
+}
+
+export default connect(mapStateToProps)(App);
