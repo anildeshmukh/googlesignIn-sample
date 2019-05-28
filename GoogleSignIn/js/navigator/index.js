@@ -3,7 +3,15 @@ import App from '../App'
 import Welcome from '../dashboard/WelcomeScreen'
 
 const AppStackNavigator = createStackNavigator({
-  LandingScreen:{screen:App},
+  LandingScreen:{
+    screen:App,
+    headerMode: 'none',
+    navigationOptions: {
+      title:'Login',
+      headerVisible: false,
+      header: null,
+    }
+  },
   WelcomeScreen:{screen:Welcome}
 });
 

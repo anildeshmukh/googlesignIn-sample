@@ -14,14 +14,9 @@ import config from './config'
 
 type Props = {};
 class App extends Component<Props> {
-  static navigationOptions = {
-        title: 'Login',
-  };
 
   async componentDidMount() {
-    console.log('REDUCER', this.props);
     this._configureGoogleSignIn();
-    // await this._getCurrentUser();
   }
 
   _configureGoogleSignIn() {
@@ -88,9 +83,5 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
 });
-
-const mapStateToProps = ()=>{
-  return {greetings:'Good Morning!'}
-}
 
 export default connect(null)(App);
